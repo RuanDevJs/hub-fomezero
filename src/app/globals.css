@@ -19,8 +19,9 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+#page-home-background {
+  background: url("../assets/Madre\ Teresa.jpg") no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100dvh;
 }

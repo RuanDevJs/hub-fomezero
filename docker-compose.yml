@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: hubfome-zero
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_BACKEND_PASSWORD}
+    ports:
+      - "${MYSQL_BACKEND_PORT}:3306"
+    command: --default-authentication-plugin=mysql_native_password --bind-address=0.0.0.0
+    volumes:
+      - hubfome-zero:/var/lib/mysql
+volumes:
+  hubfome-zero:
