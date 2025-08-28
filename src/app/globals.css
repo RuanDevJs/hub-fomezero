@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "primereact/resources/themes/lara-light-cyan/theme.css"
+  layer(primereact);
 
 :root {
   --background: #ffffff;
@@ -24,4 +26,8 @@
   background-size: cover;
   background-attachment: fixed;
   height: 100dvh;
+}
+
+#sobre-container {
+  align-items: start;
 }

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { fontPoppins } from "@/style/font";
+
+import { PrimeReactProvider, } from 'primereact/api';
+
+import "primereact/resources/primereact.min.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "HubFomeZero | Plataforma de Doação de Alimentos para Famílias em Vulnerabilidade",
@@ -15,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${fontPoppins.className} antialiased`}>
-        {children}
+        <PrimeReactProvider>
+          {children}
+        </PrimeReactProvider>
       </body>
     </html>
   );
