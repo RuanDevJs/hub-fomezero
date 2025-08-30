@@ -1,10 +1,10 @@
 "use client"
 import Logo from "@/assets/logo.svg"
-import Button from "@/components/Button"
-
 import Donation from '@/components/Home/Donation'
+
 import Main from '@/components/Home/Main'
 import Sobre from '@/components/Home/Sobre'
+
 import Image from "next/image"
 import { Phone } from "phosphor-react"
 
