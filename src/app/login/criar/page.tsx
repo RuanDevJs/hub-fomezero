@@ -8,7 +8,7 @@ export default function Login() {
       </aside>
       <div>
         <div className='mb-4'>
-          <h1 className='text-5xl text-zinc-800 font-normal'>Login</h1>
+          <h1 className='text-5xl text-zinc-800 font-normal'>Cadastro</h1>
           <p className='text-sm text-zinc-500 mt-3.5 w-[70%]'>Cadastre-se no HubFomeZero e faça parte de uma rede de solidariedade que conecta doadores a famílias em situação de vulnerabilidade. Em poucos passos, você pode transformar sua vontade de ajudar em impacto real.</p>
         </div>
         <form className='w-[70%]'>
@@ -20,13 +20,8 @@ export default function Login() {
             <label className='text-lg text-zinc-800 font-normal block'>Senha</label>
             <input type="password" className='bg-zinc-100 p-3.5 w-full outline-none text-base rounded' placeholder='*******' />
           </div>
-          <button className='bg-blue-400 p-3.5 w-full outline-none text-xl rounded text-white uppercase font-medium hover:bg-blue-500 ease-in-out transition cursor-pointer'>fazer login</button>
+          <button className='bg-blue-400 p-3.5 w-full outline-none text-xl rounded text-white uppercase font-medium hover:bg-blue-500 ease-in-out transition cursor-pointer'>me cadastrar</button>
         </form>
-        <div className='mt-8'>
-          <h2 className='text-xl text-zinc-800 font-normal'>Cadastre-se</h2>
-          <p className='text-sm text-zinc-500 w-[70%] mb-3 mt-0.5'>Crie sua conta e comece a transformar vidas hoje mesmo!</p>
-          <button className='bg-blue-400 px-3 py-2 outline-none text-base rounded text-white font-normal hover:bg-blue-500 ease-in-out transition cursor-pointer'>Me cadastrar</button>
-        </div>
       </div>
     </main>
   )
