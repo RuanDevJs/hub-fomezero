@@ -5,6 +5,7 @@ import { PrimeReactProvider, } from 'primereact/api';
 
 import "primereact/resources/primereact.min.css";
 import "./globals.css";
+import QueryProvider from "@/components/QueryProvider";
 
 export const metadata: Metadata = {
   title: "HubFomeZero | Plataforma de Doação de Alimentos para Famílias em Vulnerabilidade",
@@ -20,7 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${fontPoppins.className} antialiased`}>
         <PrimeReactProvider>
-          {children}
+          <QueryProvider>
+            {children}
+          </QueryProvider>
         </PrimeReactProvider>
       </body>
     </html>

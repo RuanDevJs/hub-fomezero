@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.85.9",
+    "axios": "^1.11.0",
+    "mongodb": "^6.19.0",
     "mysql2": "^3.14.3",
     "next": "15.5.2",
     "phosphor-react": "^1.4.1",

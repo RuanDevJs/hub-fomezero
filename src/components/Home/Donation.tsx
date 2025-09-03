@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { BookmarkSimple, MagnifyingGlass } from 'phosphor-react'
-import API from '@/services/api'
+import API from '@/services/familys'
 
 export default function Donation() {
   return (

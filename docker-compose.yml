@@ -1,16 +1,15 @@
-version: "3.8"
-
+version: "3.6"
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: hubfome-zero
+  mongo:
+    image: mongo
+    container_name: hubfrom_zero_mongodb
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_BACKEND_PASSWORD}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     ports:
-      - "${MYSQL_BACKEND_PORT}:3306"
-    command: --default-authentication-plugin=mysql_native_password --bind-address=0.0.0.0
+      - ${MONGO_PORT}:27017
     volumes:
-      - hubfome-zero:/var/lib/mysql
+      - hubfrom_zero_mongodb:/data/db
 volumes:
-  hubfome-zero:
+  hubfrom_zero_mongodb:
