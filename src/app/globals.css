@@ -52,3 +52,7 @@
 .loading {
   animation: AnimateLoading infinite 1s alternate;
 }
+
+.animate-from-up {
+  animation: AnimateLoading 0.72s forwards;
+}

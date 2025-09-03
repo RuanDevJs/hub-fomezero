@@ -1,13 +1,12 @@
 "use client";
 
-import { FormEvent, useRef } from "react";
+import { FormEvent } from "react";
 import { useRegisterForm } from "@/context/RegisterContext";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 
 export default function Register() {
-  const { handleForm } = useRegisterForm();
-  const toastRef = useRef<Toast>(null);
+  const { handleForm, showToast } = useRegisterForm();
   const navigate = useRouter();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -16,7 +15,7 @@ export default function Register() {
     const inputPassword = event.currentTarget.inputPassword.value as string;
 
     if (!inputEmail.length || !inputPassword.length) {
-      return toastRef.current?.show({ severity: 'error', summary: "Não foi possível fazer o cadastro", detail: "E-mail ou senha não preenchidos corretamente." })
+      return showToast({ severity: 'error', summary: "Não foi possível fazer o cadastro", detail: "E-mail ou senha não preenchidos corretamente." })
     }
 
     handleForm({ email: inputEmail, password: inputPassword });
@@ -34,7 +33,6 @@ export default function Register() {
         <input name="inputPassword" type="password" className='bg-zinc-100 p-3.5 w-full outline-none text-base rounded' placeholder='*******' />
       </div>
       <button className='bg-blue-400 p-3.5 w-full outline-none text-xl rounded text-white uppercase font-medium hover:bg-blue-500 ease-in-out transition cursor-pointer'>me cadastrar</button>
-      <Toast ref={toastRef} />
     </form>
   )
 }

@@ -9,7 +9,6 @@ export default async function DatabaseClient(options?: MongoClientOptions): Prom
     const database = await client.connect();
 
     console.log("Conectado ao banco de dados!")
-    console.log(ENV)
     return database;
   } catch (error) {
     if (error instanceof Error) {

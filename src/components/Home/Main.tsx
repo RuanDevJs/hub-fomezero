@@ -1,10 +1,14 @@
+'use client'
+
 import Logo from "@/assets/logo.svg"
 import { Phone } from 'phosphor-react'
 
 import Button from '../Button'
 import Image from 'next/image'
+import { useRouter } from "next/navigation"
 
 export default function Main() {
+  const router = useRouter();
   return (
     <main id='page-home-background'>
       <header className='px-14 py-12'>
@@ -39,7 +43,7 @@ export default function Main() {
                 </a>
               </li>
               <li>
-                <Button>Fazer Login</Button>
+                <Button onClick={() => router.push("/login")}>Fazer Login</Button>
               </li>
             </ul>
           </nav>

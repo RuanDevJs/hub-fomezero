@@ -2,7 +2,7 @@ import ENV from "@/services/env";
 import DatabaseClient from "../MongoClient";
 
 import { MongoError } from "mongodb";
-import { TypeFamilyPayload } from "@/types/Family";
+import { IFamily, TypeFamilyPayload } from "@/types/Family";
 
 export default class FamilyRepository {
   async initDatabase() {
@@ -16,7 +16,7 @@ export default class FamilyRepository {
     const { client, database } = await this.initDatabase();
     try {
       if (client && database) {
-        return database.collection<TypeFamilyPayload>("familys").find().toArray();
+        return database.collection<IFamily>("familys").find().toArray();
       }
     } catch (error) {
       if (error instanceof MongoError) console.error("Erro ao fazer as listagem das famílias no banco de dados!");
@@ -27,7 +27,7 @@ export default class FamilyRepository {
     const { client, database } = await this.initDatabase();
     try {
       if (client && database) {
-        const newFamily = await database.collection<TypeFamilyPayload>("familys").insertOne({ ...payload });
+        const newFamily = await database.collection<TypeFamilyPayload>("familys").insertOne({ ...payload, created_at: new Date() });
         console.log("Uma nova família acaba de ser registrada no banco de dados", { id: newFamily.insertedId.toString(), ...payload });
 
         return newFamily.insertedId.toString();

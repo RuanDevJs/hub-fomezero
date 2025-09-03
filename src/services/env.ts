@@ -5,6 +5,7 @@ const ENV = {
   MONGO_HOST: process.env.MONGO_HOST,
   MONGO_DATABASE: process.env.MONGO_DATABASE,
   DATABSE_URI: `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`,
+  JWT: process.env.JWT_SECRET
 }
 
 export default ENV;

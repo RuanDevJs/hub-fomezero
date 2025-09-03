@@ -60,14 +60,10 @@ export default function AdminPanel() {
   return (
     <main className='p-10'>
       <header>
-        <ul className="grid grid-cols-3">
+        <ul className="grid grid-cols-2">
           <li className="text-center border-r-2 border-zinc-300">
-            <h1 className="text-8xl font-medium text-blue-400">12</h1>
-            <p className="text-base font-normal text-zinc-500">Famĺias Cadastradas</p>
-          </li>
-          <li className="text-center border-r-2 border-zinc-300">
-            <h1 className="text-8xl font-medium text-blue-400">3</h1>
-            <p className="text-base font-normal text-zinc-500">Doadores Cadastrados</p>
+            <h1 className="text-8xl font-medium text-blue-400">R$ 100</h1>
+            <p className="text-base font-normal text-zinc-500">Em doações</p>
           </li>
           <li className="text-center">
             <h1 className="text-8xl font-medium text-blue-400">5</h1>
@@ -108,6 +104,13 @@ export default function AdminPanel() {
           <Column
             field="total_donations"
             header={<ColumnHeader title="Total de Doações" />}
+            headerClassName="text-sm text-red-500"
+            headerStyle={{ background: "#fff" }}
+            body={data => <ColumnBody value={data.total_donations} />}
+          />
+          <Column
+            field=""
+            header=""
             headerClassName="text-sm text-red-500"
             headerStyle={{ background: "#fff" }}
             body={data => <ColumnBody value={data.total_donations} />}
