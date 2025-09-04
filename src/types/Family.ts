@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface IAddress {
   cep: string;
   street: string;
@@ -9,12 +11,13 @@ export interface IAddress {
 }
 
 export interface IFamily {
-  _id: string;
+  _id: ObjectId;
   name: string;
   description: string;
   total_donations: number;
   address: IAddress;
   created_at: Date;
+  picture_url: string;
 }
 
 export type TypeFamilyPayload = Omit<IFamily, "_id">;

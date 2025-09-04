@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
 
     if (user && user.email) {
       const comparePassword = await bcrypt.compare(payload.password, user.password);
-      console.log(comparePassword)
       if (!comparePassword) return NextResponse.json({ error: "Verifique se o e-mail e a senha estão corretos." }, { status: 404 });
 
       const token = JWT.sign({ sub: user._id }, ENV.JWT!, {
@@ -26,6 +25,12 @@ export async function POST(req: NextRequest) {
       });
 
       cookiesHandler.set("@hubfome-zero:auth-token", token, {
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60
+      })
+
+      cookiesHandler.set("@hubfome-zero:auth-email", JSON.stringify(user.email), {
         httpOnly: true,
         path: "/",
         maxAge: 60 * 60

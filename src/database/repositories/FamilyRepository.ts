@@ -1,7 +1,7 @@
 import ENV from "@/services/env";
 import DatabaseClient from "../MongoClient";
 
-import { MongoError } from "mongodb";
+import { MongoError, ObjectId } from "mongodb";
 import { IFamily, TypeFamilyPayload } from "@/types/Family";
 
 export default class FamilyRepository {
@@ -16,7 +16,7 @@ export default class FamilyRepository {
     const { client, database } = await this.initDatabase();
     try {
       if (client && database) {
-        return database.collection<IFamily>("familys").find().toArray();
+        return await (await database.collection<IFamily>("familys").find().toArray()).map(oldValue => ({ ...oldValue, _id: oldValue._id.toString() }));
       }
     } catch (error) {
       if (error instanceof MongoError) console.error("Erro ao fazer as listagem das famílias no banco de dados!");
@@ -31,6 +31,23 @@ export default class FamilyRepository {
         console.log("Uma nova família acaba de ser registrada no banco de dados", { id: newFamily.insertedId.toString(), ...payload });
 
         return newFamily.insertedId.toString();
+      }
+    } catch (error) {
+      if (error instanceof MongoError) console.error("Erro ao cadastrar família no banco de dados!", error)
+    }
+  }
+
+  async addPictureUrl(_id: string, picture_url: string) {
+    const { client, database } = await this.initDatabase();
+    try {
+      if (client && database) {
+        await database.collection<IFamily>("familys")
+          .findOneAndUpdate(
+            { _id: new ObjectId(_id), },
+            { $set: { picture_url } }
+          );
+
+        return true;
       }
     } catch (error) {
       if (error instanceof MongoError) console.error("Erro ao cadastrar família no banco de dados!", error)

@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     const payload = await req.json() as TypeFamilyPayload;
 
     const insertedId = await familyRepository.save(payload);
-    if (insertedId !== undefined) return NextResponse.json({ created: true, }, { status: 201 });
+    if (insertedId !== undefined) return NextResponse.json({ created: true, insertedId }, { status: 201 });
 
     return NextResponse.json({ created: "Não foi possível cadastrar família no banco de dados" }, { status: 500 });
   } catch (error) {

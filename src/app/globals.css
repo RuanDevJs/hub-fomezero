@@ -32,6 +32,17 @@
   }
 }
 
+@keyframes AnimateButton {
+  from {
+    opacity: 0.72;
+    transform: translate3d(0, -5px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0px, 0);
+  }
+}
+
 #page-home-background {
   background: url("../assets/Madre\ Teresa.jpg") no-repeat center center;
   background-size: cover;
@@ -55,4 +66,8 @@
 
 .animate-from-up {
   animation: AnimateLoading 0.72s forwards;
+}
+
+.animate-button {
+  animation: AnimateButton 0.72s infinite alternate;
 }

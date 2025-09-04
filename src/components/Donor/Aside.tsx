@@ -1,9 +1,26 @@
 'use client'
+
 import Image from 'next/image'
 import Logo from "@/assets/logo.svg"
-import { Plus, UserList } from 'phosphor-react'
+
+import { tv } from 'tailwind-variants'
+import { Gear, SignOut, UserList } from 'phosphor-react'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { logoutSession } from '@/app/actions'
+
+const activeLink = tv({
+  base: "flex items-center gap-1 p-3 rounded",
+  variants: {
+    active: {
+      true: "bg-blue-300",
+      false: "bg-transparent"
+    }
+  }
+})
 
 export default function Aside() {
+  const pathaname = usePathname();
   return (
     <aside className='bg-blue-400 p-3'>
       <nav className='flex flex-col justify-center h-full'>
@@ -11,14 +28,15 @@ export default function Aside() {
           <Image src={Logo} alt="" width={250} height={250} />
         </div>
         <ul className='mt-10 flex flex-col gap-5'>
-          {/* <li className='flex items-center gap-1 p-3 rounded'>
-            <House size={25} color='#fff' />
-            <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Admin</a>
-          </li> */}
-          <li className='flex items-center gap-1 p-3 rounded bg-blue-300'>
+          <li className={activeLink({ active: pathaname === "/admin/doador/painel-de-familias" })}>
             <UserList size={25} color='#fff' />
-            <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Fazer uma doação</a>
+            <Link href="/admin/doador/painel-de-familias" className='block p-1 text-base font-normal text-zinc-50'>Fazer uma doação</Link>
           </li>
+          <li className={activeLink({ active: pathaname === "/admin/doador/minha-conta" })}>
+            <Gear size={25} color='#fff' />
+            <Link href="/admin/doador/minha-conta" className='block p-1 text-base font-normal text-zinc-50'>Minha Conta</Link>
+          </li>
+
           {/* <li className='flex items-center gap-1 p-3 rounded'>
             <Gear size={25} color='#fff' />
             <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Doadores</a>
@@ -28,7 +46,13 @@ export default function Aside() {
             <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Doações / Entregas</a>
           </li> */}
         </ul>
-        <a href="#" className='mt-auto'>Sair da minha conta</a>
+        <button
+          onClick={async () => await logoutSession()}
+          className='transition ease-in-out mt-auto flex items-center px-5 py-3 text-center text-base font-normal text-white bg-blue-950 rounded-4xl hover:rounded-full hover:bg-blue-900'
+        >
+          <SignOut size={32} />
+          Sair da minha conta
+        </button>
       </nav>
     </aside>
   )

@@ -24,13 +24,11 @@ export default function Login() {
   const authenticateMutation = useMutation({
     mutationFn: async (payload: IAuthenticatePayload) => await authenticateUser(payload),
     onSuccess: ({ data }) => {
-      const user = data.user as IUser;
-
-      switch (user.role) {
+      switch (data.user.role) {
         case 1:
-          router.push("/admin/doador")
+          router.push("/admin/doador/painel-de-familias")
           break;
-        case 2:
+        case 0:
           router.push("/admin/assistente/painel-de-familias")
           break;
         default:

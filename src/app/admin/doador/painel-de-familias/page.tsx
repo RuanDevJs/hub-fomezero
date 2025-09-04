@@ -7,7 +7,7 @@ import { IFamily } from "@/types/Family";
 import { useQuery } from "@tanstack/react-query";
 
 import Image from "next/image";
-import { MagnifyingGlass } from "phosphor-react"
+import { Heart, MagnifyingGlass } from "phosphor-react"
 
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -57,6 +57,19 @@ export default function AdminPanel() {
     )
   }
 
+  function ActionsColumnBody() {
+    return (
+      <ul>
+        <li>
+          <button className="min-w-48 bg-blue-400 py-2 px-5 flex items-center justify-center gap-1.5 text-sm font-medium text-white rounded cursor-pointer hover:bg-blue-500 transition ease-in-out">
+            <Heart size={25} />
+            Fazer doação
+          </button>
+        </li>
+      </ul>
+    )
+  }
+
   return (
     <main className='p-10'>
       <header>
@@ -77,7 +90,6 @@ export default function AdminPanel() {
           </button>
         </div>
       </header>
-
       <div className="w-[100%] mx-auto">
         <DataTable value={data} loading={isLoading}>
           <Column
@@ -103,17 +115,19 @@ export default function AdminPanel() {
           />
           <Column
             field="total_donations"
-            header={<ColumnHeader title="Total de Doações" />}
+            header={<ColumnHeader title="Doações" />}
             headerClassName="text-sm text-red-500"
             headerStyle={{ background: "#fff" }}
             body={data => <ColumnBody value={data.total_donations} />}
+            style={{ width: "5%", textAlign: "center" }}
           />
           <Column
             field=""
             header=""
             headerClassName="text-sm text-red-500"
             headerStyle={{ background: "#fff" }}
-            body={data => <ColumnBody value={data.total_donations} />}
+            body={() => <ActionsColumnBody />}
+            bodyStyle={{ width: '10%' }}
           />
         </DataTable>
       </div>

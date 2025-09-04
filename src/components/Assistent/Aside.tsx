@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Logo from "@/assets/logo.svg"
-import { Plus, UserList } from 'phosphor-react'
+import { Plus, SignOut, UserList } from 'phosphor-react'
 
 export default function Aside() {
   return (
@@ -28,7 +28,13 @@ export default function Aside() {
             <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Doações / Entregas</a>
           </li> */}
         </ul>
-        <a href="#" className='mt-auto'>Sair da minha conta</a>
+        <a
+          href="#"
+          className='transition ease-in-out mt-auto flex items-center px-5 py-3 text-center text-base font-normal text-white bg-blue-950 rounded-4xl hover:rounded-full hover:bg-blue-900'
+        >
+          <SignOut size={32} />
+          Sair da minha conta
+        </a>
       </nav>
     </aside>
   )
