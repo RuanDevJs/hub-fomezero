@@ -2,7 +2,7 @@ import ENV from "@/services/env";
 import DatabaseClient from "../MongoClient";
 
 import { IUser, IUserDonorPayload } from "@/types/User";
-import { MongoError } from "mongodb";
+import { MongoError, ObjectId } from "mongodb";
 
 import bcrypt from "bcrypt"
 
@@ -46,6 +46,23 @@ export default class UserRepository {
         console.log("Uma doador acaba de ser registrado no banco de dados", { id: newDonor.insertedId.toString(), ...payload });
 
         return newDonor.insertedId.toString();
+      }
+    } catch (error) {
+      if (error instanceof MongoError) console.error("Erro ao cadastrar família no banco de dados!", error)
+    }
+  }
+
+  async addPictureUrl(_id: string, picture_url: string) {
+    const { client, database } = await this.initDatabase();
+    try {
+      if (client && database) {
+        await database.collection<IUser>("users")
+          .findOneAndUpdate(
+            { _id: new ObjectId(_id), },
+            { $set: { picture_url } }
+          );
+
+        return true;
       }
     } catch (error) {
       if (error instanceof MongoError) console.error("Erro ao cadastrar família no banco de dados!", error)

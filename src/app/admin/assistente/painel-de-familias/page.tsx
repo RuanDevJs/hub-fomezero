@@ -19,7 +19,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 
-
 interface IResponseCep {
   cep: string;
   logradouro: string;
@@ -39,7 +38,7 @@ async function fetchFamily() {
 
 export default function AdminPanel() {
   const { data, isLoading } = useQuery({
-    queryKey: ["listagem-de-familia"],
+    queryKey: ["assistente-social-listagem-de-familia"],
     queryFn: fetchFamily,
   });
   const router = useRouter();
@@ -319,8 +318,12 @@ function ModalAddPicture() {
       const data = new FormData();
       data.set("file", inputFile);
 
-      await api.post(`/assistente-social/upload-foto-familia?group_id=${group_id}&family_id=${family_id}`, data);
-      router.push(`/assistente-social/painel-de-familias`);
+      try {
+        await api.post(`assistente-social/upload-foto-familia?group_id=${group_id}&family_id=${family_id}`, data);
+        router.push(`/admin/assistente/painel-de-familias`);
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 

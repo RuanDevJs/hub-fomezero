@@ -18,6 +18,7 @@ export interface IParsedUser {
   password: string;
   role: number;
   created_at: Date;
+  picture_url: string;
 }
 
 export interface IUserDonorPayload {
