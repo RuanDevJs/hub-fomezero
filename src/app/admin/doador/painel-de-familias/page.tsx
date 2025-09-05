@@ -17,7 +17,6 @@ import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { Toast, ToastMessage } from "primereact/toast";
 import { FormEvent, useRef, useState } from "react";
-import { Resend } from "resend";
 
 async function fetchFamily() {
   try {
@@ -173,7 +172,7 @@ function ModalDonation({ showToast }: { showToast: (props: ToastMessage) => void
   const { Canvas } = useQRCode();
 
   const searchParams = useSearchParams();
-  const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY)
+  console.log({ user })
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -195,12 +194,6 @@ function ModalDonation({ showToast }: { showToast: (props: ToastMessage) => void
 
   async function handleFinishDonation() {
     //Acionar um toast e redirecionar o usuário para página de famílias
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'ruanvelpidio@hotmail.com',
-      subject: 'Hello World, Ruan Vitor',
-      html: '<p>Congrats on sending your <strong>first email</strong>!</p>'
-    });
     showToast({ severity: "success", summary: "Doação feita com sucesso!", detail: "Sua solidariedade alimenta esperança e transforma vidas." });
   }
 

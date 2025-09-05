@@ -3,9 +3,9 @@ import { ObjectId } from "mongodb";
 export interface IDonation {
   _id: ObjectId;
   message: string;
-  price: string;
-  user_donation: ObjectId;
-  family_donation: ObjectId;
+  price: number;
+  user_id: ObjectId;
+  family_id: ObjectId;
   status: "INICIADA" | "EM ROTA DE ENTREGA" | "CONCLUÍDA";
   created_at: Date;
 }
