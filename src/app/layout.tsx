@@ -3,7 +3,8 @@ import { fontPoppins } from "@/style/font";
 
 import { PrimeReactProvider, } from 'primereact/api';
 
-import "primereact/resources/primereact.min.css";
+import "primereact/resources/primereact.min.css"
+
 import "./globals.css";
 import QueryProvider from "@/components/QueryProvider";
 

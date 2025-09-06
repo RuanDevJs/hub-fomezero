@@ -3,9 +3,10 @@
 import Loading from "@/components/Loading";
 import { useSession } from "@/context/SessionContext";
 import api from "@/services/api"
+import { TypeDonationPayload } from "@/types/Donation";
 
 import { IFamily } from "@/types/Family";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useQRCode } from "next-qrcode";
 
 import Image from "next/image";
@@ -164,15 +165,24 @@ function ModalHeader() {
   )
 }
 
+async function createDonation(payload: TypeDonationPayload) {
+  return (await api.post("doador/fazer-doacao", payload)).data;
+}
+
 function ModalDonation({ showToast }: { showToast: (props: ToastMessage) => void }) {
   const { user } = useSession();
   const [activeQrCode, setActiveQrCode] = useState(false);
+  const [form, setForm] = useState<{ message: string, price: number } | null>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
   const { Canvas } = useQRCode();
 
   const searchParams = useSearchParams();
-  console.log({ user })
+  const router = useRouter();
+
+  const createDonationMutation = useMutation({
+    mutationFn: (payload: TypeDonationPayload) => createDonation(payload),
+  })
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -182,10 +192,10 @@ function ModalDonation({ showToast }: { showToast: (props: ToastMessage) => void
       const inputPrice = Number(event.currentTarget.inputPrice.value) as number;
 
       if (inputMessage.length && inputPrice >= 5) {
+        setForm({ message: inputMessage, price: inputPrice })
         return setActiveQrCode(true);
       }
 
-      //Acionar um toast
       return showToast({
         severity: "error", summary: "Não foi possível fazer doação", detail: "Preencha corretamente os daados dos formulários!"
       });
@@ -193,8 +203,25 @@ function ModalDonation({ showToast }: { showToast: (props: ToastMessage) => void
   }
 
   async function handleFinishDonation() {
-    //Acionar um toast e redirecionar o usuário para página de famílias
-    showToast({ severity: "success", summary: "Doação feita com sucesso!", detail: "Sua solidariedade alimenta esperança e transforma vidas." });
+    try {
+      if (form !== null) {
+        await createDonationMutation.mutateAsync({
+          ...form,
+          created_at: new Date(),
+          family_id: searchParams.get("family_id")!,
+          user_id: user._id,
+          status: "INICIADA"
+        })
+      }
+
+      showToast({ severity: "success", summary: "Doação feita com sucesso!", detail: "Sua solidariedade alimenta esperança e transforma vidas." });
+      router.push("/admin/doador/painel-de-familias")
+    } catch (error) {
+      console.error(error)
+      return showToast({
+        severity: "error", summary: "Não foi possível fazer doação", detail: "Erro ao registrar a doação no sistema!"
+      });
+    }
   }
 
   if (activeQrCode) {

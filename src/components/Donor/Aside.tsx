@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Logo from "@/assets/logo.svg"
 
 import { tv } from 'tailwind-variants'
-import { Gear, SignOut, UserList } from 'phosphor-react'
+import { Gear, Heartbeat, SignOut, UserList } from 'phosphor-react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { logoutSession } from '@/app/actions'
@@ -36,15 +36,10 @@ export default function Aside() {
             <Gear size={25} color='#fff' />
             <Link href="/admin/doador/minha-conta" className='block p-1 text-base font-normal text-zinc-50'>Minha Conta</Link>
           </li>
-
-          {/* <li className='flex items-center gap-1 p-3 rounded'>
-            <Gear size={25} color='#fff' />
-            <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Doadores</a>
-          </li> */}
-          {/* <li className='flex items-center gap-1 p-3 rounded'>
-            <Phone size={25} color='#fff' />
-            <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Doações / Entregas</a>
-          </li> */}
+          <li className={activeLink({ active: pathaname === "/admin/doador/painel-de-doacoes" })}>
+            <Heartbeat size={25} color='#fff' />
+            <Link href="/admin/doador/painel-de-doacoes" className='block p-1 text-base font-normal text-zinc-50'>Painel de Doações</Link>
+          </li>
         </ul>
         <button
           onClick={async () => await logoutSession()}
