@@ -1,17 +1,12 @@
 import DonationRepository from '@/database/repositories/DonationRepository';
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const cookiesHandler = await cookies();
   try {
     const donationRepository = new DonationRepository();
-    const id = cookiesHandler.get("@hubfome-zero:auth-id");
 
-    if (id && id.value) {
-      const rows = await donationRepository.findById(JSON.parse(id.value));
-      if (rows !== undefined && rows.length) return NextResponse.json({ data: rows, }, { status: 200 });
-    }
+    const rows = await donationRepository.findAll();
+    if (rows !== undefined && rows.length) return NextResponse.json({ data: rows, }, { status: 200 });
 
     return NextResponse.json({ error: 404 }, { status: 201 });
   } catch (error) {

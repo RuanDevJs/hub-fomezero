@@ -29,6 +29,18 @@ export async function POST(req: NextRequest) {
         maxAge: 60 * 60
       })
 
+      cookiesHandler.set("@hubfome-zero:auth-email", JSON.stringify(payload.email), {
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60
+      })
+
+      cookiesHandler.set("@hubfome-zero:auth-id", JSON.stringify(insertedId), {
+        httpOnly: true,
+        path: "/",
+        maxAge: 60 * 60
+      })
+
       return NextResponse.json({ created: true, }, { status: 201 });
     }
 

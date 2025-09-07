@@ -41,6 +41,40 @@ export default class DonationRepository {
     }
   }
 
+  async findById(user_id: string) {
+    const { client, database } = await this.initDatabase();
+    try {
+      if (client && database) {
+        return await (await database.collection<IDonation>("donations")
+          .aggregate([
+            {
+              $lookup: {
+                from: "familys",
+                localField: "family_id",
+                foreignField: "_id",
+                as: "family",
+              }
+            },
+            {
+              $unwind: "$family"
+            },
+            {
+              $match: {
+                user_id: new ObjectId(user_id)
+              }
+            }
+          ])
+          .toArray())
+          .map(
+            oldValue => ({ ...oldValue, _id: oldValue._id.toString(), family_id: oldValue.family_id.toString(), user_id: oldValue.user_id.toString() })
+          );
+      }
+    } catch (error) {
+      if (error instanceof MongoError) console.error("Erro ao fazer as listagem das doações no banco de dados!");
+    }
+  }
+
+
   async save(payload: TypeDonationPayload) {
     const { client, database } = await this.initDatabase();
     try {

@@ -1,9 +1,25 @@
 'use client'
 import Image from 'next/image'
 import Logo from "@/assets/logo.svg"
-import { Plus, SignOut, UserList } from 'phosphor-react'
+
+import { SignOut, UserList, Heartbeat } from 'phosphor-react'
+import { tv } from 'tailwind-variants'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { logoutSession } from '@/app/actions'
+
+const activeLink = tv({
+  base: "flex items-center gap-1 p-3 rounded",
+  variants: {
+    active: {
+      true: "bg-blue-300",
+      false: "bg-transparent"
+    }
+  }
+})
 
 export default function Aside() {
+  const pathname = usePathname();
   return (
     <aside className='bg-blue-400 p-3'>
       <nav className='flex flex-col justify-center h-full'>
@@ -11,26 +27,19 @@ export default function Aside() {
           <Image src={Logo} alt="" width={250} height={250} />
         </div>
         <ul className='mt-10 flex flex-col gap-5'>
-          {/* <li className='flex items-center gap-1 p-3 rounded'>
-            <House size={25} color='#fff' />
-            <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Admin</a>
-          </li> */}
-          <li className='flex items-center gap-1 p-3 rounded bg-blue-300'>
+          <li className={activeLink({ active: pathname === "/admin/assistente/painel-de-familias" })}>
             <UserList size={25} color='#fff' />
-            <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Familias</a>
+            <Link href="/admin/assistente/painel-de-familias" className='block p-1 text-base font-normal text-zinc-50'>Painel de famílias</Link>
           </li>
-          {/* <li className='flex items-center gap-1 p-3 rounded'>
-            <Gear size={25} color='#fff' />
-            <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Doadores</a>
-          </li> */}
-          {/* <li className='flex items-center gap-1 p-3 rounded'>
-            <Phone size={25} color='#fff' />
-            <a href="#" className='block p-1 text-base font-normal text-zinc-50'>Painel de Doações / Entregas</a>
-          </li> */}
+          <li className={activeLink({ active: pathname === "/admin/assistente/painel-de-doacoes" })}>
+            <Heartbeat size={25} color='#fff' />
+            <Link href="/admin/assistente/painel-de-doacoes" className='block p-1 text-base font-normal text-zinc-50'>Painel de doações</Link>
+          </li>
         </ul>
         <a
           href="#"
           className='transition ease-in-out mt-auto flex items-center px-5 py-3 text-center text-base font-normal text-white bg-blue-950 rounded-4xl hover:rounded-full hover:bg-blue-900'
+          onClick={async () => await logoutSession()}
         >
           <SignOut size={32} />
           Sair da minha conta
