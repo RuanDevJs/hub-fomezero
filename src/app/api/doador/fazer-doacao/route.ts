@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     const data = await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",
       to: ["ruanvelpidio@hotmail.com"],
-      subject: "Hello world",
+      subject: "Seu gesto fez a diferença: agradecimento de uma família atendida",
       react: EmailTemplate({ name: "Ruan Vitor" }),
     });
 

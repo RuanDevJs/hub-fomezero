@@ -8,6 +8,7 @@ export interface IUser {
   password: string;
   role: number;
   created_at: Date;
+  picture_url: string;
 }
 
 export interface IParsedUser {
